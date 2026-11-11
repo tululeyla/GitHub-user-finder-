@@ -4,10 +4,13 @@ function App(){
 
   const [user, setUser ] = useState(null);
   const [ username, setUsername] = useState("octocat");
-  const [loading , setLoading] = useState(true);
+  const [loading , setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [inputSearch, setInputSearch] = useState('');
 
   useEffect(() => {
+    setLoading(true);
+    setError(null);
   fetch(`https://api.github.com/users/${username}`)
     .then(response =>{
       if(!response.ok){
@@ -19,8 +22,12 @@ function App(){
       setUser(data)
       setLoading(false)
     })
-    .catch(
-      setLoading(false)
+    .catch((err) => {
+       setError(err.message)
+       setUser(null)
+       setLoading(false)
+    }
+      
     )
      
     
@@ -28,7 +35,11 @@ function App(){
 
   return (
     <div>
-      <form action="#">
+      <form action="#" onSubmit={
+        (e)=>{
+          e.preventDefault();
+          setUsername(inputSearch)
+        }}>
         <input 
       type="text"
       placeholder="Enter username"
@@ -40,12 +51,10 @@ function App(){
       }
       />
 
-         <button onClick={
-        ()=>{
-          setUsername(inputSearch)
-        }
-      }>Search</button>
+         <button type="submit">Search</button>
       </form>
+       {loading && <p>Loading...</p> }
+       {error && <p style={ { color: "red"}}>{error}</p>}
 
       {user && (
         <div>
