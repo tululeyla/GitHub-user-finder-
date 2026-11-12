@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-
+import UserCard from "./components/UserCard";
+import RepoList from "./components/RepoList";
 function App(){
 
   const [user, setUser ] = useState(null);
@@ -72,38 +73,8 @@ function App(){
        {loading && <p>Loading...</p> }
        {error && <p style={ { color: "red"}}>{error}</p>}
 
-      {user && (
-        <div>
-          <img
-            src={user.avatar_url}
-            alt="User Avatar"
-            width="100"
-            style={{ borderRadius: "50%" }}
-          />
-          <h2>{user.name || user.login}</h2>
-          <p>{user.bio || "no bio"}</p>
-          
-
-          
-        </div>
-        
-      )}
-       {repo.length > 0 ? (
-  <ul>
-    {repo.map((re) => (
-      <li key={re.id} style={{ marginBottom: "10px" }}>
-        <a href={re.html_url} target="_blank" rel="noreferrer">
-          <strong>{re.name}</strong>
-        </a>
-        <p style={{ margin: "2px 0", fontSize: "14px", color: "#555" }}>
-          {re.description || "No description provided"}
-        </p>
-      </li>
-    ))}
-  </ul>
-) : (
-  <p>No repositories found</p>
-)}
+      {user && <UserCard user = {user}/>}
+       <RepoList repo = {repo}/>
     </div>
     
     
