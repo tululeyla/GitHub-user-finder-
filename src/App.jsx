@@ -9,6 +9,8 @@ function App(){
   const [error, setError] = useState(null);
   const [inputSearch, setInputSearch] = useState('');
   const [repo, setRepo] = useState([]);
+  const [repoSearch, setRepoSearch] =useState('');
+  const [sortOrder, setSortOrder] = useState('a-z');
 
   useEffect(() => {
     setLoading(true);
@@ -49,7 +51,16 @@ function App(){
      
     
   },[username])
-
+const filteredRepos = [...repo].filter(re=>re.name.toLowerCase().includes(repoSearch.toLowerCase()))
+.sort((a,b) => {
+ if (sortOrder === "a-z") {
+  return a.name.localeCompare(b.name);
+} else if (sortOrder === "z-a") {
+  return b.name.localeCompare(a.name);
+} else if (sortOrder === "stars") {
+  return b.stargazers_count - a.stargazers_count;
+}
+})
   return (
     <div>
       <form action="#" onSubmit={
@@ -74,7 +85,28 @@ function App(){
        {error && <p style={ { color: "red"}}>{error}</p>}
 
       {user && <UserCard user = {user}/>}
-       <RepoList repo = {repo}/>
+      <input 
+      value={repoSearch}
+      type="text"
+      placeholder="filter repo by name..."
+      onChange={(e) => setRepoSearch(e.target.value) }
+      />
+      <button type="button"
+      onClick={() => setRepoSearch('')}
+      >Clear</button>
+      <select
+      value={sortOrder}
+      onChange={(e) => setSortOrder(e.target.value)}>
+        <option value="a-z">A to Z</option>
+        <option value="z-a">Z to A</option>
+        <option value="stars">Most Stars</option>
+      </select>
+      {/* Show how many repos match the current filter */}
+      <p style={{ fontSize: "14px", color: "#666" }}>
+        Showing {filteredRepos.length} repositories
+      </p>
+
+       <RepoList repo = {filteredRepos}/>
     </div>
     
     

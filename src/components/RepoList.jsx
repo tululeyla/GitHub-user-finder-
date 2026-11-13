@@ -11,7 +11,11 @@ export default function RepoList({repo}){
         <p style={{ margin: "2px 0", fontSize: "14px", color: "#555" }}>
           {re.description || "No description provided"}
         </p>
+        <p style={{ fontSize: "12px", color: "#888", marginTop: "4px" }}>
+  Language: {re.language || "Not specified"}
+</p>
       </li>
+
     ))}
   </ul>
 ) : (
