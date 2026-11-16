@@ -14,6 +14,7 @@ export default function RepoList({repo}){
         <p style={{ fontSize: "12px", color: "#888", marginTop: "4px" }}>
   Language: {re.language || "Not specified"}
 </p>
+<p>{re.stargazers_count}</p>
       </li>
 
     ))}
