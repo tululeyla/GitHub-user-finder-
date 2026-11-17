@@ -4,7 +4,7 @@ export default function RepoList({repo}){
             {repo.length > 0 ? (
   <ul>
     {repo.map((re) => (
-      <li key={re.id} style={{ marginBottom: "10px" }}>
+      <li key={re.id}   tyle={{ marginBottom: "10px" }}>
         <a href={re.html_url} target="_blank" rel="noreferrer">
           <strong>{re.name}</strong>
         </a>
